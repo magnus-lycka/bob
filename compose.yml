@@ -5,15 +5,19 @@ services:
     build:
       context: .
       args:
-        - USER_UID
-        - USER_GID
+        - USER_UID=${USER_UID}
+        - USER_GID=${USER_GID}
+        - USERNAME=${USERNAME}
+        - SITE_DIRECTORY=${SITE_DIRECTORY}
     ports:
       - "606:80"
     environment:
       BOB: "./bob.sh"
-      WEBHOOK_SECRET: 'my-secret-signature'
+      WEBHOOK_SECRET: ${WEBHOOK_SECRET}
+      SITE_DIRECTORY: ${SITE_DIRECTORY}
     volumes:
-      - ./testdirectory:/site
+      - ${SITE_DIRECTORY}:${SITE_DIRECTORY}
+      - ${SSH_DIRECTORY}:${SSH_DIRECTORY}
 
 networks:
   bob_default:

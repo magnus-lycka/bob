@@ -1,5 +1,5 @@
 
-from os import environ
+from os import getenv
 import subprocess
 import logging
 import sys
@@ -9,7 +9,9 @@ from pydantic import BaseModel
 
 from . import util
 
-file_handler = logging.FileHandler(filename='/site/bob.log')
+SITE_DIR = getenv("SITE_DIRECTORY")
+
+file_handler = logging.FileHandler(filename=SITE_DIR + '/bob.log')
 stdout_handler = logging.StreamHandler(sys.stdout)
 handlers = [file_handler, stdout_handler]
 
@@ -31,8 +33,8 @@ class Build(BaseModel):
 
 def execute() -> Build:
     result = subprocess.run(
-        environ['BOB'],
-        cwd='/site',
+        getenv('BOB'),
+        cwd=SITE_DIR,
         shell=True,
         text=True,
         capture_output=True
