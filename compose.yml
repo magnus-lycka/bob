@@ -1,0 +1,17 @@
+version: "3.8"
+
+services:
+  bob:
+    build: .
+    ports:
+      - "606:80"
+    environment:
+      BOB: "./bob.sh"
+      WEBHOOK_SECRET: 'my-secret-signature'
+    volumes:
+      - ./testdirectory:/site
+
+networks:
+  bob_default:
+    driver: overlay
+    attachable: true
