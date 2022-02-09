@@ -2,7 +2,11 @@ version: "3.8"
 
 services:
   bob:
-    build: .
+    build:
+      context: .
+      args:
+        - USER_UID
+        - USER_GID
     ports:
       - "606:80"
     environment:
